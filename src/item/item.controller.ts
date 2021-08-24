@@ -1,12 +1,20 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Item } from 'src/types/itemType';
+import { ItemService } from './item.service';
 
 @Controller('item')
 export class ItemController {
 
+    constructor(private item: ItemService){}
 
-    @Get()
-    getAll(): string {
-        return "Hello world !";
+    @Get('all')
+    async getAll(): Promise<[]> {
+        return await this.item.findAll();
+    }
+
+    @Post('add')
+    add(@Body() item: Item){
+        this.item.add(item);
     }
 
 }
