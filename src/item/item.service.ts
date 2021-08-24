@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataTypes, Sequelize } from 'sequelize';
+import { localSequelize } from 'src/main';
 import { Item, StoredItem } from 'src/types/itemType';
 
 @Injectable()
@@ -9,18 +10,7 @@ export class ItemService {
     private itemModel;
 
     constructor(){
-        this.sequelize = new Sequelize({
-            dialect: "mariadb",
-            /* host: process.env.MYSQL_HOST,
-            database: process.env.MYSQL_DATABASE,
-            username: process.env.MYSQL_USER,
-            password: process.env.MYSQL_PASSWORD */
-            host: "localhost",
-            database: "stockManager",
-            username: "stockManager",
-            password: "stockManagerPassword"
-        });
-
+        this.sequelize = localSequelize;
         this.itemModel = this.sequelize.define('Item', {
             type: {
                 type: DataTypes.STRING,

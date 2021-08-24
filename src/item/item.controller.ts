@@ -1,4 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { Item, StoredItem } from 'src/types/itemType';
 import { ItemService } from './item.service';
 
@@ -12,6 +15,7 @@ export class ItemController {
         return await this.item.findAll();
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post('add')
     add(@Body() item: Item){
         this.item.add(item);
@@ -22,11 +26,13 @@ export class ItemController {
         return await this.item.get(id);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put("/update/:id")
     async update(@Param('id') id: number, @Body() item: Item){
         this.item.update(id, item);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Delete('/delete/:id')
     delete(@Param('id') id: number){
         this.item.delete(id);
