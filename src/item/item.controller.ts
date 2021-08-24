@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
-import { Item } from 'src/types/itemType';
+import { Item, StoredItem } from 'src/types/itemType';
 import { ItemService } from './item.service';
 
 @Controller('item')
@@ -8,7 +8,7 @@ export class ItemController {
     constructor(private item: ItemService){}
 
     @Get('all')
-    async getAll(): Promise<[]> {
+    async getAll(): Promise<StoredItem[]> {
         return await this.item.findAll();
     }
 
@@ -20,6 +20,11 @@ export class ItemController {
     @Get('get/:id')
     async get(@Param('id') id: number){
         return await this.item.get(id);
+    }
+
+    @Put("/update/:id")
+    async update(@Param('id') id: number, @Body() item: Item){
+        this.item.update(id, item);
     }
 
 }

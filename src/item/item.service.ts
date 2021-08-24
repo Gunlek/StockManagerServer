@@ -47,7 +47,7 @@ export class ItemService {
         this.itemModel.sync({alter: true});
     }
 
-    async findAll(): Promise<[]>{
+    async findAll(): Promise<StoredItem[]>{
         return this.itemModel.findAll();
     }
 
@@ -58,6 +58,14 @@ export class ItemService {
 
     async get(id: number): Promise<StoredItem> {
         return await this.itemModel.findOne({
+            where: {
+                id: id
+            }
+        });
+    }
+
+    update(id: number, item: Item): void {
+        this.itemModel.update(item, {
             where: {
                 id: id
             }
