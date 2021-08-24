@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataTypes, Sequelize } from 'sequelize';
-import { Item } from 'src/types/itemType';
+import { Item, StoredItem } from 'src/types/itemType';
 
 @Injectable()
 export class ItemService {
@@ -54,6 +54,14 @@ export class ItemService {
     add(item: Item): boolean{
         this.itemModel.create(item);
         return true;
+    }
+
+    async get(id: number): Promise<StoredItem> {
+        return await this.itemModel.findOne({
+            where: {
+                id: id
+            }
+        });
     }
 
 }

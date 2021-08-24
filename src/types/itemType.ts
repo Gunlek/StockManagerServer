@@ -26,3 +26,9 @@ export class Item {
     @IsString()
     location: string;
 }
+
+export class StoredItem extends Item {
+    id: number;
+    createdAt: string;
+    updatedAt: string;
+}
