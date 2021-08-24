@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { Item, StoredItem } from 'src/types/itemType';
 import { ItemService } from './item.service';
 
@@ -25,6 +25,11 @@ export class ItemController {
     @Put("/update/:id")
     async update(@Param('id') id: number, @Body() item: Item){
         this.item.update(id, item);
+    }
+
+    @Delete('/delete/:id')
+    delete(@Param('id') id: number){
+        this.item.delete(id);
     }
 
 }

@@ -72,4 +72,12 @@ export class ItemService {
         });
     }
 
+    delete(id: number){
+        this.itemModel.destroy({
+            where: {
+                id: id
+            }
+        });
+    }
+
 }
