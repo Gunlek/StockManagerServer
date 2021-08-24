@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataTypes, Model, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 
 @Injectable()
 export class ItemService {
@@ -9,11 +9,15 @@ export class ItemService {
 
     constructor(){
         this.sequelize = new Sequelize({
-            dialect: "mysql",
-            host: process.env.MYSQL_HOST,
+            dialect: "mariadb",
+            /* host: process.env.MYSQL_HOST,
             database: process.env.MYSQL_DATABASE,
             username: process.env.MYSQL_USER,
-            password: process.env.MYSQL_PASSWORD
+            password: process.env.MYSQL_PASSWORD */
+            host: "localhost",
+            database: "stockManager",
+            username: "stockManager",
+            password: "stockManagerPassword"
         });
 
         this.itemModel = this.sequelize.define('Item', {
@@ -27,7 +31,7 @@ export class ItemService {
                 type: DataTypes.STRING,
             },
             quantity: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
             },
             unitPrice: {
                 type: DataTypes.DOUBLE,
@@ -35,7 +39,11 @@ export class ItemService {
             location: {
                 type: DataTypes.STRING,
             }
-        })
+        });
+    }
+
+    sync(){
+        this.itemModel.sync({alter: true});
     }
 
 }
