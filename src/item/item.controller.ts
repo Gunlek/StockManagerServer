@@ -17,8 +17,15 @@ export class ItemController {
 
     @UseGuards(JwtAuthGuard)
     @Post('add')
-    add(@Body() item: Item){
-        this.item.add(item);
+    add(@Body() item: RESTItem){
+        this.item.add({
+            type: item.type,
+            name: item.name,
+            provider: item.provider,
+            quantity: parseInt(item.quantity.toString()),
+            unitPrice: parseFloat(item.unitPrice.toString()),
+            location: item.location
+        });
     }
 
     @Get('get/:id')
@@ -35,7 +42,7 @@ export class ItemController {
             provider: item.provider,
             quantity: parseInt(item.quantity.toString()),
             unitPrice: parseFloat(item.unitPrice.toString()),
-            location: item.location.toString()
+            location: item.location
         });
     }
 

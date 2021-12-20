@@ -1,4 +1,4 @@
-import { IsDefined, IsInt, IsNumber, IsString } from "class-validator";
+import { IsDefined, IsInt, IsNumber, IsNumberString, IsString } from "class-validator";
 
 export class Item {
 
@@ -42,12 +42,12 @@ export class RESTItem {
     provider: string;
 
     @IsDefined()
-    @IsString()
-    quantity: string;
+    @IsNumberString()
+    quantity: string|number;
 
     @IsDefined()
-    @IsString()
-    unitPrice: string;
+    @IsNumberString()
+    unitPrice: string|number;
 
     @IsDefined()
     @IsString()
