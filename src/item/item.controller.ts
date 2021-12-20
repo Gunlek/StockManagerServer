@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nes
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
-import { Item, StoredItem } from 'src/types/itemType';
+import { Item, RESTItem, StoredItem } from 'src/types/itemType';
 import { ItemService } from './item.service';
 
 @Controller('item')
@@ -28,8 +28,15 @@ export class ItemController {
 
     @UseGuards(JwtAuthGuard)
     @Put("/update/:id")
-    async update(@Param('id') id: number, @Body() item: Item){
-        this.item.update(id, item);
+    async update(@Param('id') id: number, @Body() item: RESTItem){
+        this.item.update(id, {
+            type: item.type,
+            name: item.name,
+            provider: item.provider,
+            quantity: parseInt(item.quantity.toString()),
+            unitPrice: parseFloat(item.unitPrice.toString()),
+            location: item.location.toString()
+        });
     }
 
     @UseGuards(JwtAuthGuard)

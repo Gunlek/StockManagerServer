@@ -27,6 +27,33 @@ export class Item {
     location: string;
 }
 
+export class RESTItem {
+
+    @IsDefined()
+    @IsString()
+    type: string;
+
+    @IsDefined()
+    @IsString()
+    name: string;
+
+    @IsDefined()
+    @IsString()
+    provider: string;
+
+    @IsDefined()
+    @IsString()
+    quantity: string;
+
+    @IsDefined()
+    @IsString()
+    unitPrice: string;
+
+    @IsDefined()
+    @IsString()
+    location: string;
+}
+
 export class StoredItem extends Item {
     id: number;
     createdAt: string;
